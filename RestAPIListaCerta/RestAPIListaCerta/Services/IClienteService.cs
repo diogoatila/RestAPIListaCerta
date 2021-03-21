@@ -7,10 +7,10 @@ namespace RestAPIListaCerta.Services
    public interface IClienteService
     {
         Cliente Create(Cliente cliente);
-        Cliente GetById(long id);
-        List<Cliente> GetAll();
+        Cliente FindById(int id);
+        List<Cliente> FindAll();
         Cliente Update(Cliente cliente);
-        void Delete(long id);
+        void Delete(int id);
 
     }
 }

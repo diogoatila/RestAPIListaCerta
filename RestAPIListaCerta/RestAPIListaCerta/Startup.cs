@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using RestAPIListaCerta.Context;
 using RestAPIListaCerta.Services;
 using RestAPIListaCerta.Services.Implementations;
 using System;
@@ -31,7 +33,11 @@ namespace RestAPIListaCerta
 
             services.AddControllers();
             //injeção de dependencia
+            services.AddDbContext<ListaContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IProdutoService, ProdutoService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RestAPIListaCerta", Version = "v1" });

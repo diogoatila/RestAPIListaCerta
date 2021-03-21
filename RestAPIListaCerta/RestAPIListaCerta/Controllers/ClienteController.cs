@@ -21,9 +21,9 @@ namespace RestAPIListaCerta.Controllers
         }
 
         [HttpGet ("listaCliente/{idCliente}")]
-        public IActionResult Get(long id)
+        public IActionResult Get(int id)
         {
-            var cliente = _clienteService.GetById(id);
+            var cliente = _clienteService.FindById(id);
             if (cliente == null) return NotFound();
             return Ok(cliente);
         }
@@ -31,7 +31,7 @@ namespace RestAPIListaCerta.Controllers
         [HttpGet("listaCliente")]
         public IActionResult GetAll()
         {
-            return Ok(_clienteService.GetAll());
+            return Ok(_clienteService.FindAll());
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace RestAPIListaCerta.Controllers
         }
 
         [HttpDelete("listaCliente/{idCliente}")]
-        public IActionResult Delete(long id)
+        public IActionResult Delete(int id)
         {
             _clienteService.Delete(id);
             return NoContent();

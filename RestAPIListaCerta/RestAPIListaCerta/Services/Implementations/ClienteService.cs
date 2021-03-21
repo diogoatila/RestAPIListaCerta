@@ -1,9 +1,9 @@
-﻿using RestAPIListaCerta.Models;
+﻿using RestAPIListaCerta.Context;
+using RestAPIListaCerta.Models;
+using RestAPIListaCerta.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace RestAPIListaCerta.Services.Implementations
 {
@@ -11,63 +11,81 @@ namespace RestAPIListaCerta.Services.Implementations
     {
 
         private volatile int count;
+
+        private ListaContext _context;
+        public ClienteService(ListaContext context)
+        {
+            _context = context;
+        }
+
+        public List<Cliente> FindAll()
+        {
+            return _context.Clientes.ToList();
+        }
+
+
+
+        public Cliente FindById(int id)
+        {
+            return _context.Clientes.SingleOrDefault(c => c.ClienteID == id);
+        }
         public Cliente Create(Cliente cliente)
         {
+            try
+            {
+                _context.Add(cliente);
+                _context.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
             return cliente;
         }
-
-        public void Delete(long id)
-        {
-            
-        }
-
-        public List<Cliente> GetAll()
-        {
-            List<Cliente> clientes = new List<Cliente>();
-            for(int i = 0; i<8; i++)
-            {
-                Cliente cliente = MockCliente(i);
-                clientes.Add(cliente);
-            }
-            return clientes; 
-        }
-
-       
-
-        public Cliente GetById(long id)
-        {
-            return new Cliente
-            {
-                Id = IncrementAndGet(),
-                FirstName = "Diogo",
-                LastName = "Carvalho",
-                Email = "diogoar57@gmail.com",
-                Document = "39518367841",
-                Gender = "Masculino"
-            };
-        }
-
         public Cliente Update(Cliente cliente)
         {
+            if (!Exists(cliente.ClienteID)) return new Cliente();
+
+            var result = _context.Clientes.SingleOrDefault(c => c.ClienteID == cliente.ClienteID);
+            if (result != null)
+            {
+                try
+                {
+                    _context.Entry(result).CurrentValues.SetValues(cliente);
+                    _context.SaveChanges();
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+
             return cliente;
         }
 
-        private Cliente MockCliente(int i)
+        public void Delete(int id)
         {
-            return new Cliente
+            var result = _context.Clientes.SingleOrDefault(c => c.ClienteID == id);
+            if (result != null)
             {
-                Id = IncrementAndGet(),
-                FirstName = "FirstName Cliente" + i,
-                LastName = "LastName Cliente" + i,
-                Email = "Email Cliente" + i,
-                Document = "Document Cliente" + i,
-                Gender = "Masculino" + i
-            };
+                try
+                {
+                    _context.Clientes.Remove(result);
+                    _context.SaveChanges();
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
-        private long IncrementAndGet()
+        private bool Exists(int id)
         {
-            return Interlocked.Increment(ref count);
+            return _context.Clientes.Any(c => c.ClienteID == id);
         }
     }
 }
