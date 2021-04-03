@@ -15,6 +15,7 @@ namespace RestAPIListaCerta.Context
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Lista> Listas { get; set; }
 
+        public DbSet<Usuarios> Usuarios { get; set; }
 
     }
 }

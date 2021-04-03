@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestAPIListaCerta.Models;
 using RestAPIListaCerta.Services;
@@ -6,6 +7,7 @@ using RestAPIListaCerta.Services;
 namespace RestAPIListaCerta.Controllers
 {
     [ApiController]
+    [Authorize("Bearer")]
     [Route("api/[controller]")]
     public class ProdutoController : ControllerBase
     {

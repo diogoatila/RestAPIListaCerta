@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RestAPIListaCerta.Context;
 
 namespace RestAPIListaCerta.Migrations
 {
     [DbContext(typeof(ListaContext))]
-    partial class ListaContextModelSnapshot : ModelSnapshot
+    [Migration("20210329012906_add-mgration usuarios")]
+    partial class addmgrationusuarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -8,37 +8,37 @@ using System.Linq;
 
 namespace RestAPIListaCerta.Services.Implementations
 {
-    public class ClienteService : IClienteService
+    public class CategoriaService : ICategoriaService
     {
 
      
-        private readonly IClienteRepository _repository;
-        public ClienteService(IClienteRepository repository)
+        private readonly ICategoriaRepository _repository;
+        public CategoriaService(ICategoriaRepository repository)
         {
             _repository = repository;
         }
 
         //Implemente nos métodos abaixo, a regra de negócio da aplicação!
 
-        public List<Cliente> FindAll()
+        public List<Categoria> FindAll()
         {
             return _repository.FindAll();
         }
 
-        public Cliente FindById(int id)
+        public Categoria FindById(int id)
         {
             return _repository.FindById(id);
         }
 
-        public Cliente Create(Cliente cliente)
+        public Categoria Create(Categoria categoria)
         {
 
-            return _repository.Create(cliente);
+            return _repository.Create(categoria);
 
         }
-        public Cliente Update(Cliente cliente)
+        public Categoria Update(Categoria categoria)
         {
-            return _repository.Update(cliente);
+            return _repository.Update(categoria);
         }
 
         public void Delete(int id)
